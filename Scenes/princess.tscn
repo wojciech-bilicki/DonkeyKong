@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bki1iyaanpw2i"]
+
+[ext_resource type="Texture2D" uid="uid://cmtpvcrfe8vyf" path="res://Assets/Princess.png" id="1_h0xrn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o1yam"]
+size = Vector2(15, 22)
+
+[node name="Princess" type="Area2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_h0xrn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_o1yam")

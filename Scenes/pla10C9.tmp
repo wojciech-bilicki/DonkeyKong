@@ -1,0 +1,106 @@
+[gd_scene load_steps=13 format=3 uid="uid://ck1yfxisc6vta"]
+
+[ext_resource type="Script" path="res://Scenes/player.gd" id="1_v5lgi"]
+[ext_resource type="Texture2D" uid="uid://coo3t7wh1tr15" path="res://Assets/Mario_Run3.png" id="2_2gign"]
+[ext_resource type="Texture2D" uid="uid://7jlsbo6sc50a" path="res://Assets/Mario_Climb.png" id="2_7kbp2"]
+[ext_resource type="Texture2D" uid="uid://dep8cd73kh0e" path="res://Assets/Mario_Run1.png" id="3_8qu4l"]
+[ext_resource type="Texture2D" uid="uid://cfp745se356oo" path="res://Assets/Mario_Run2.png" id="4_whoru"]
+[ext_resource type="Texture2D" uid="uid://buyjs2xxha2u0" path="res://Assets/Mario_Hammer_Idle1.png" id="6_txomy"]
+[ext_resource type="Texture2D" uid="uid://dcf0y1fpyoips" path="res://Assets/Mario_Hammer_Run2.png" id="7_l25hf"]
+[ext_resource type="Texture2D" uid="uid://b4ho6ojwm3qbq" path="res://Assets/Mario_Hammer_Run4.png" id="8_3pgxw"]
+[ext_resource type="Texture2D" uid="uid://btd1d2xc1w57q" path="res://Assets/Mario_Hammer_Idle2.png" id="9_kky0d"]
+[ext_resource type="Texture2D" uid="uid://dj87cw152n6rg" path="res://Assets/Hammer.png" id="10_yc5xf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ht8ub"]
+size = Vector2(12, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ttkbl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_7kbp2")
+}],
+"loop": true,
+"name": &"climb",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_8qu4l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_whoru")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_8qu4l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_2gign")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_txomy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_l25hf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_txomy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_3pgxw")
+}],
+"loop": true,
+"name": &"default_hammer",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_8qu4l")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_kky0d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_txomy")
+}],
+"loop": true,
+"name": &"idle_hammer",
+"speed": 1.0
+}]
+
+[node name="Player" type="CharacterBody2D"]
+texture_filter = 1
+scale = Vector2(4, 4)
+collision_mask = 14
+script = ExtResource("1_v5lgi")
+climbing_speed = null
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ht8ub")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ttkbl")
+animation = &"idle_hammer"
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 30)
+collision_mask = 4
+
+[node name="HammerTimer" type="Timer" parent="."]
+
+[node name="Hammer" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-0.75, -13)
+texture = ExtResource("10_yc5xf")
+
+[node name="Marker2D" type="Marker2D" parent="."]

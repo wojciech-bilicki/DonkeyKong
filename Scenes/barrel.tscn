@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://de3id4gbsawv1"]
+
+[ext_resource type="Texture2D" uid="uid://cglwox2ypcui2" path="res://Assets/Barrel.png" id="1_k64cc"]
+[ext_resource type="Script" path="res://Scenes/barrel.gd" id="1_oyrx8"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i5ccr"]
+radius = 24.0
+
+[node name="Barrel" type="RigidBody2D"]
+collision_layer = 4
+collision_mask = 11
+angular_velocity = 0.523599
+script = ExtResource("1_oyrx8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(4, 4)
+texture = ExtResource("1_k64cc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_i5ccr")
