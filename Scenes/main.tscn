@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cs5emeampcabg"]
+[gd_scene load_steps=11 format=3 uid="uid://cs5emeampcabg"]
 
 [ext_resource type="Texture2D" uid="uid://dscnjb4d3qsor" path="res://Assets/DonkeyKong_TA.webp" id="2_skvxp"]
 [ext_resource type="PackedScene" uid="uid://cq4b6xuyfbucc" path="res://Scenes/platform.tscn" id="3_u1twl"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://Scenes/BarrelsSpawner.gd" id="7_g4onc"]
 [ext_resource type="Script" path="res://Scenes/random_barrel_spawn_timer.gd" id="8_hxext"]
 [ext_resource type="PackedScene" uid="uid://db8ehrmlc0whw" path="res://Scenes/hammer.tscn" id="9_ad5fp"]
+[ext_resource type="Script" path="res://Scenes/points_manager.gd" id="10_04gaa"]
 
 [node name="main" type="Node"]
 
@@ -318,3 +319,6 @@ script = ExtResource("8_hxext")
 [node name="Hammer" parent="." instance=ExtResource("9_ad5fp")]
 position = Vector2(-346, -56)
 scale = Vector2(4, 4)
+
+[node name="PointsManager" type="Node" parent="."]
+script = ExtResource("10_04gaa")

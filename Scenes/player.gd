@@ -11,7 +11,8 @@ const JUMP_VELOCITY = -400.0
 
 @onready var animated_sprite_2d = $AnimatedSprite2D
 @onready var ray_cast_2d = $RayCast2D
-@onready var hammer = $Hammer as PlayerHammer
+@onready var hammer = $Hammer
+@onready var hammer_collision = $HammerCollision
 @onready var hammer_timer = $HammerTimer
 
 var hammer_rotation_point = Vector2(0, -3)
@@ -29,7 +30,6 @@ var platform_underneath_the_player: Platform = null
 var has_hammer = false
 
 func _ready():
-	hammer.hammer_collided.connect(on_hammer_collided)
 	hammer_timer.timeout.connect(on_hammer_timer_timeout)
 	hammer_start_position = hammer.position
 	animated_sprite_2d.frame_changed.connect(on_sprite_frames_changed)
@@ -54,8 +54,10 @@ func _physics_process(delta):
 		if direction != current_direction:
 			current_direction = direction
 		if direction > 0:
+			hammer_collision.position = Vector2(10, 0)
 			animated_sprite_2d.flip_h = false
 		elif direction < 0:
+			hammer_collision.position = Vector2(-10, 0)
 			animated_sprite_2d.flip_h = true
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
@@ -116,7 +118,7 @@ func handle_movement_collision():
 			position.y -= 8
 			
 	if collider is Barrel:
-		print("DIE")
+		die()
 	
 	return collision
 	
@@ -127,7 +129,7 @@ func check_barrel_collision():
 		var barrel_id = collider.get_rid()
 		if last_barrel_id == null:
 			last_barrel_id = barrel_id
-			print("AWARD POINTS")
+			award_points.emit(collider.global_position)
 				
 	
 func _on_stair_detector_body_entered(body):
@@ -163,16 +165,21 @@ func get_hammer_rotation_angle(frame_index):
 func hammer_fetched():
 	has_hammer = true
 	hammer.visible = true
-	hammer.set_process(true)
 	hammer_timer.start()
+	hammer_collision.monitoring = true
 
 func on_hammer_timer_timeout():
 	has_hammer = false
 	hammer.visible = false
-	hammer.set_process(false)
+	hammer_collision.monitoring = false
 
-func on_hammer_collided():
-	award_points.emit()
+func on_hammer_collided(collision_position: Vector2):
+	award_points.emit(collision_position)
 
 func die():
-	print("DIE")
+	pass
+
+
+func _on_area_2d_body_entered(body):
+	award_points.emit(body.global_position)
+	body.queue_free()

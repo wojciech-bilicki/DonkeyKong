@@ -1,13 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://dfmpfwfb23646"]
+[gd_scene load_steps=2 format=3 uid="uid://dfmpfwfb23646"]
 
-[ext_resource type="FontFile" uid="uid://dqp6cwo6ats2k" path="res://Assets/Retro Gaming.ttf" id="1_nan8x"]
-
-[sub_resource type="Theme" id="Theme_wwbyj"]
-default_font = ExtResource("1_nan8x")
+[ext_resource type="Theme" uid="uid://cmi3f16tde32h" path="res://theme.tres" id="1_q8a4i"]
 
 [node name="Label" type="Label"]
 texture_filter = 1
 offset_right = 40.0
 offset_bottom = 23.0
-theme = SubResource("Theme_wwbyj")
+theme = ExtResource("1_q8a4i")
 text = "100"

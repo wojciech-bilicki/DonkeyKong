@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://ck1yfxisc6vta"]
+[gd_scene load_steps=14 format=3 uid="uid://ck1yfxisc6vta"]
 
 [ext_resource type="Script" path="res://Scenes/player.gd" id="1_v5lgi"]
 [ext_resource type="Texture2D" uid="uid://coo3t7wh1tr15" path="res://Assets/Mario_Run3.png" id="2_2gign"]
@@ -9,7 +9,6 @@
 [ext_resource type="Texture2D" uid="uid://dcf0y1fpyoips" path="res://Assets/Mario_Hammer_Run2.png" id="7_l25hf"]
 [ext_resource type="Texture2D" uid="uid://b4ho6ojwm3qbq" path="res://Assets/Mario_Hammer_Run4.png" id="8_3pgxw"]
 [ext_resource type="Texture2D" uid="uid://btd1d2xc1w57q" path="res://Assets/Mario_Hammer_Idle2.png" id="9_kky0d"]
-[ext_resource type="Script" path="res://Scenes/player_hammer.gd" id="10_it34h"]
 [ext_resource type="Texture2D" uid="uid://dj87cw152n6rg" path="res://Assets/Hammer.png" id="10_yc5xf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ht8ub"]
@@ -79,9 +78,8 @@ animations = [{
 "speed": 12.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6ltkq"]
-radius = 0.75
-height = 9.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0nsdw"]
+size = Vector2(3.5, 12.0625)
 
 [node name="Player" type="CharacterBody2D"]
 texture_filter = 1
@@ -101,25 +99,23 @@ target_position = Vector2(0, 30)
 collision_mask = 4
 
 [node name="HammerTimer" type="Timer" parent="."]
-wait_time = 7.0
+wait_time = 20.0
 
 [node name="Marker2D" type="Marker2D" parent="."]
 
-[node name="Hammer" type="Area2D" parent="."]
-process_mode = 4
+[node name="Hammer" type="Sprite2D" parent="."]
 visible = false
 position = Vector2(0, -11.25)
-collision_layer = 16
-collision_mask = 4
-script = ExtResource("10_it34h")
-
-[node name="HammerSprite" type="Sprite2D" parent="Hammer"]
-texture_filter = 1
 texture = ExtResource("10_yc5xf")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hammer"]
-position = Vector2(0, -1.5)
-rotation = 1.5708
-shape = SubResource("CapsuleShape2D_6ltkq")
+[node name="HammerCollision" type="Area2D" parent="."]
+position = Vector2(10, 0)
+collision_layer = 16
+collision_mask = 4
+monitoring = false
 
-[connection signal="body_entered" from="Hammer" to="Hammer" method="_on_body_entered"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HammerCollision"]
+position = Vector2(0, 0.25)
+shape = SubResource("RectangleShape2D_0nsdw")
+
+[connection signal="body_entered" from="HammerCollision" to="." method="_on_area_2d_body_entered"]

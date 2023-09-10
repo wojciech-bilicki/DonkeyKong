@@ -1,0 +1,6 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://cmi3f16tde32h"]
+
+[ext_resource type="FontFile" uid="uid://dqp6cwo6ats2k" path="res://Assets/Retro Gaming.ttf" id="1_081qo"]
+
+[resource]
+default_font = ExtResource("1_081qo")
