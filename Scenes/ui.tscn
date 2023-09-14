@@ -1,8 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://c6fmp7hr728tj"]
+[gd_scene load_steps=5 format=3 uid="uid://c6fmp7hr728tj"]
 
+[ext_resource type="Script" path="res://Scenes/ui.gd" id="1_53v00"]
 [ext_resource type="Theme" uid="uid://cmi3f16tde32h" path="res://theme.tres" id="1_n6tqh"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_nefdo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m0j2l"]
+bg_color = Color(1, 0.321569, 0.411765, 1)
+
 [node name="UI" type="CanvasLayer"]
+script = ExtResource("1_53v00")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 15
@@ -15,9 +22,61 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="Label" type="Label" parent="MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme = ExtResource("1_n6tqh")
-text = "Points: "
+text = "Points:  0"
+
+[node name="WinLabel" type="Label" parent="MarginContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_n6tqh")
+text = "You have won!"
+label_settings = SubResource("LabelSettings_nefdo")
+horizontal_alignment = 2
+
+[node name="LoseContainer" type="CenterContainer" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="LoseContainer"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_m0j2l")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LoseContainer/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.5
+offset_top = -20.0
+offset_right = 43.5
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="LoseContainer/Panel/VBoxContainer"]
+layout_mode = 2
+text = "YOU LOST!!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="LoseContainer/Panel/VBoxContainer"]
+layout_mode = 2
+text = "RESTART"
+
+[connection signal="pressed" from="LoseContainer/Panel/VBoxContainer/Button" to="." method="_on_button_pressed"]

@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dfmpfwfb23646"]
+[gd_scene load_steps=3 format=3 uid="uid://dfmpfwfb23646"]
 
 [ext_resource type="Theme" uid="uid://cmi3f16tde32h" path="res://theme.tres" id="1_q8a4i"]
+[ext_resource type="Script" path="res://Scenes/points_label.gd" id="2_h6rlh"]
 
 [node name="Label" type="Label"]
 texture_filter = 1
@@ -8,3 +9,10 @@ offset_right = 40.0
 offset_bottom = 23.0
 theme = ExtResource("1_q8a4i")
 text = "100"
+script = ExtResource("2_h6rlh")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

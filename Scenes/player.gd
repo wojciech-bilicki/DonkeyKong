@@ -14,7 +14,13 @@ const JUMP_VELOCITY = -400.0
 @onready var hammer = $Hammer
 @onready var hammer_collision = $HammerCollision
 @onready var hammer_timer = $HammerTimer
+@onready var collision_shape_2d = $CollisionShape2D
 
+@onready var ui = $"../UI" as UI
+
+
+
+var is_dead = false
 var hammer_rotation_point = Vector2(0, -3)
 var last_barrel_id = null
 var can_climb = false
@@ -35,6 +41,9 @@ func _ready():
 	animated_sprite_2d.frame_changed.connect(on_sprite_frames_changed)
 
 func _physics_process(delta):
+	
+	if is_dead:
+		return
 	# Add the gravity.
 	if not is_on_floor() && !is_on_ladder:
 		velocity.y += gravity * delta
@@ -117,8 +126,12 @@ func handle_movement_collision():
 		if collision_degree == 90:
 			position.y -= 8
 			
-	if collider is Barrel:
+	if collider is Barrel && !is_dead:
 		die()
+		
+	if collider is Princess:
+		print("princess")
+		
 	
 	return collision
 	
@@ -146,7 +159,7 @@ func stop_climbing():
 
 
 func on_sprite_frames_changed():
-	if !has_hammer or is_on_ladder:
+	if !has_hammer or is_on_ladder or is_dead:
 		return
 		
 	var frame_index = animated_sprite_2d.frame
@@ -177,9 +190,19 @@ func on_hammer_collided(collision_position: Vector2):
 	award_points.emit(collision_position)
 
 func die():
-	pass
+	is_dead = true
+	gravity = 0
+	set_collision_layer_value(1, false)
+	set_process_input(false)
+	animated_sprite_2d.play("death")
 
 
 func _on_area_2d_body_entered(body):
 	award_points.emit(body.global_position)
 	body.queue_free()
+	
+
+func _on_animated_sprite_2d_animation_finished():
+	if animated_sprite_2d.animation == "death":
+		ui.show_lose_ui()
+		
